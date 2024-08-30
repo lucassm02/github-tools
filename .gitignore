@@ -1,0 +1,53 @@
+# Node Modules
+node_modules/
+
+# Bun Modules
+bun.lockb
+.bun/
+
+# Build/output directory
+dist/
+build/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor temporary files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test coverage reports
+coverage/
+
+# Build artifacts and temporary files
+out/
+.tmp/
+
+# TypeScript cache files
+*.tsbuildinfo
+
+# Lock files (if any)
+package-lock.json
+yarn.lock
+
+# Bun-specific configuration files
+.bun-watcher

@@ -1,0 +1,40 @@
+{
+  "name": "github-tools",
+  "version": "1.0.0",
+  "description": "A package of utilities to automate GitHub configuration processes",
+  "main": "src/index.ts",
+  "repository": "https://github.com/lucassm02/github-tools.git",
+  "author": "Lucas Santos <lucassm02@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "yarn eslint src/** --fix",
+    "lint:staged": "yarn lint-staged",
+    "types": "tsc --noEmit",
+    "start:prod": "bun dist/main",
+    "start:debug": "bun --inspect src/main",
+    "test": "dotenv -e .env.test -- jest  --detectOpenHandles --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:ci": "yarn test --forceExit",
+    "test:verbose": "dotenv -e .env.test -- jest --detectOpenHandles --passWithNoTests --verbose",
+    "test:unit": "yarn test --watch -c jest-unit.config.ts",
+    "test:unit:verbose": "yarn test:verbose --watch -c jest-unit.config.ts",
+    "test:coverage": "yarn test --coverage",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import-helpers": "^1.3.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "git-commit-msg-linter": "^5.0.8",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  }
+}
