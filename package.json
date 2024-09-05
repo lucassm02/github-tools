@@ -1,17 +1,17 @@
 {
   "name": "github-tools",
   "version": "1.0.0",
-  "description": "A package of utilities to automate GitHub configuration processes",
-  "main": "src/index.ts",
-  "repository": "https://github.com/lucassm02/github-tools.git",
   "author": "Lucas Santos <lucassm02@gmail.com>",
+  "repository": "https://github.com/lucassm02/github-tools.git",
+  "main": "src/index.ts",
+  "description": "A package of utilities to automate GitHub configuration processes",
   "license": "MIT",
   "scripts": {
     "lint": "yarn eslint src/** --fix",
     "lint:staged": "yarn lint-staged",
     "types": "tsc --noEmit",
-    "start:prod": "bun dist/main",
-    "start:debug": "bun --inspect src/main",
+    "start": "bun ./src/index.ts",
+    "start:debug": "bun --inspect-brk src/main",
     "test": "dotenv -e .env.test -- jest  --detectOpenHandles --passWithNoTests --silent --noStackTrace --runInBand",
     "test:ci": "yarn test --forceExit",
     "test:verbose": "dotenv -e .env.test -- jest --detectOpenHandles --passWithNoTests --verbose",
@@ -20,8 +20,16 @@
     "test:coverage": "yarn test --coverage",
     "prepare": "husky"
   },
+  "dependencies": {
+    "@inquirer/prompts": "^5.3.8",
+    "@octokit/rest": "^21.0.2",
+    "ora": "^8.1.0",
+    "yargs": "^17.7.2"
+  },
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/node": "^22.5.1",
+    "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "eslint": "^8.57.0",

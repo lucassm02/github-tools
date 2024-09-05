@@ -66,9 +66,7 @@
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "no-shadow": "off",
-    "no-console": [
-      "error"
-    ],
+    "no-console": "off",
     "no-useless-constructor": "off",
     "no-empty-function": "off",
     "lines-between-class-members": "off",
@@ -117,7 +115,18 @@
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": {},
+      "node": {
+        "paths": [
+          "bun_modules"
+        ],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+      },
     }
   }
 }

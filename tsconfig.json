@@ -1,27 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2023",
     "lib": [
-      "es2023"
+      "ESNext"
     ],
-    "module": "commonjs",
-    "outDir": "./dist",
-    "removeComments": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
-    ],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
     "allowJs": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
-    "useUnknownInCatchVariables": false,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
     "strict": true,
+    "strictNullChecks": true,
     "skipLibCheck": true,
-    "sourceMap": true,
-    "declaration": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "baseUrl": "src",
     "rootDirs": [
       "src",
@@ -36,11 +32,4 @@
       ]
     }
   },
-  "include": [
-    "src",
-    "test"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
 }
