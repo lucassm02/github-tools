@@ -1,0 +1,18 @@
+{
+  "environment_name": "production",
+  "wait_timer": 30,
+  "reviewers": [
+    {
+      "type": "User",
+      "id": 123456
+    },
+    {
+      "type": "Team",
+      "id": 654321
+    }
+  ],
+  "deployment_branch_policy": {
+    "protected_branches": true,
+    "custom_branch_policies": false
+  }
+}

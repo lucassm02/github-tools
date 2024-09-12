@@ -1,21 +1,21 @@
 import { unlink } from 'node:fs/promises';
 import type { ArgumentsCamelCase, Argv } from 'yargs';
 
-import { getRepositories } from '@/module/repository';
-import { createOrUpdateEnvironmentSecrets as handler } from '@/module/environment';
+import {
+  getRepositories,
+  createBranchProtection as handler
+} from '@/module/repository';
 import { checkbox, confirm, input, select } from '@inquirer/prompts';
 import ora from 'ora';
 import path from 'path';
 
 type Args = Record<string, unknown>;
 
-export async function createOrUpdateEnvironmentSecrets(
+export async function createBranchProtection(
   _args: ArgumentsCamelCase<Args>,
   _yargs: Argv
 ) {
-  let secrets = {};
-
-  const environmentName = await input({ message: 'Enter environment name:' });
+  let config = {};
 
   const loadFile = await confirm({
     message: 'Do you want to provide a JSON file with the configurations?'
@@ -24,16 +24,16 @@ export async function createOrUpdateEnvironmentSecrets(
   if (loadFile) {
     const filePath = await input({
       message:
-        'Enter the path to the JSON file with the environment secret settings:'
+        'Enter the path to the JSON file with the branch protection settings:'
     });
 
     const resolvedPath = path.resolve(filePath);
 
-    secrets = await Bun.file(resolvedPath).json();
+    config = await Bun.file(resolvedPath).json();
   } else {
     const tempFolder = path.resolve('temp');
     const templateFolder = path.resolve('template');
-    const templateName = 'environment-secret.json';
+    const templateName = 'branch-protection-rule.json';
 
     const templateFilePath = path.join(templateFolder, templateName);
     const tempFilePath = path.join(tempFolder, `${crypto.randomUUID()}.json`);
@@ -68,7 +68,7 @@ export async function createOrUpdateEnvironmentSecrets(
 
     await editorProcess.exited;
 
-    secrets = await Bun.file(tempFilePath).json();
+    config = await Bun.file(tempFilePath).json();
 
     setTimeout(async () => {
       await unlink(tempFilePath);
@@ -121,16 +121,11 @@ export async function createOrUpdateEnvironmentSecrets(
   spinner.succeed('Fetch completed!');
 
   const applyToAllRepositories = await confirm({
-    message:
-      'Do you want to create this environment secret in all repositories?'
+    message: 'Do you want to create this protection in all repositories?'
   });
 
   if (applyToAllRepositories) {
-    await handler({
-      environment: environmentName,
-      secrets,
-      repos
-    });
+    await handler({ rule: config, repos });
 
     return;
   }
@@ -141,7 +136,7 @@ export async function createOrUpdateEnvironmentSecrets(
   }));
 
   const selectedIds = await checkbox({
-    message: 'Select in which repositories you want to create the secret',
+    message: 'Select in which repositories you want to create the protection',
     choices: choices,
     loop: false,
     pageSize: 20
@@ -152,8 +147,7 @@ export async function createOrUpdateEnvironmentSecrets(
   );
 
   await handler({
-    environment: environmentName,
-    secrets,
+    rule: config,
     repos: selectedRepositories
   });
 }

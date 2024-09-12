@@ -1,4 +1,5 @@
 import { octokit } from '@/service';
+import type { RequestError } from '@/types/github';
 
 type CreateOrUpdateToRepositoryParams = {
   repo: string;
@@ -34,7 +35,13 @@ async function CreateOrUpdateToRepository(
       });
     }
   } catch (error) {
-    console.error(`Failed to add secret to ${params.repo}:`, error);
+    if (typeof error === 'object') {
+      const { response } = <RequestError>error;
+
+      console.error(
+        `${response.data.message} - ${response.data.documentation_url}`
+      );
+    }
   }
 }
 

@@ -1,4 +1,6 @@
 import { octokit } from '@/service';
+import type { RequestError } from '@/types/github';
+import { createOrUpdateEnvironment } from './create-or-update-environment';
 
 type CreateOrUpdateToRepositoryParams = {
   repo: string;
@@ -27,13 +29,24 @@ async function CreateOrUpdateToRepository(
       });
     }
   } catch (error) {
-    console.error(`Failed to add secret to ${params.repo}:`, error);
+    if (typeof error === 'object') {
+      const { response } = <RequestError>error;
+
+      console.error(
+        `${response.data.message} - ${response.data.documentation_url}`
+      );
+    }
   }
 }
 
 export async function createOrUpdateEnvironmentVariable(
   params: createOrUpdateEnvironmentVariableParams
 ) {
+  await createOrUpdateEnvironment({
+    config: { environment_name: params.environment },
+    repos: params.repos
+  });
+
   for await (const item of params.repos) {
     await CreateOrUpdateToRepository({
       owner: item.owner,

@@ -26,7 +26,8 @@ export async function getRepositories(params: Params): Promise<unknown[]> {
       return (page: number) => {
         return octokit.repos.listForUser({
           page,
-          username: params.username!
+          username: params.username!,
+          sort: 'full_name'
         });
       };
     }
@@ -35,13 +36,17 @@ export async function getRepositories(params: Params): Promise<unknown[]> {
       return (page: number) => {
         return octokit.repos.listForOrg({
           org: params.org!,
-          page
+          page,
+          sort: 'full_name'
         });
       };
     }
 
     return (page: number) => {
-      return octokit.repos.listForAuthenticatedUser({ page });
+      return octokit.repos.listForAuthenticatedUser({
+        page,
+        sort: 'full_name'
+      });
     };
   };
 

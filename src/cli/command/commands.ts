@@ -1,6 +1,9 @@
 import type { Argv } from 'yargs';
 
 import { createEnvironmentHandler } from './create/environment/handler';
+import { createOrUpdateEnvironmentSecrets } from './create/environment/secret';
+import { createOrUpdateEnvironmentVariable } from './create/environment/variable';
+import { createBranchProtection } from './create/branch/handle';
 
 export function buildCommands(cli: Argv) {
   cli.command({
@@ -27,15 +30,19 @@ export function buildCommands(cli: Argv) {
           yargs.command({
             command: 'secret',
             describe: 'Create a new secret for provided environment',
-            handler: (_args) => {},
-            builder: { name: {} }
+            handler: (args) => {
+              createOrUpdateEnvironmentSecrets(args, yargs);
+            },
+            builder: {}
           });
 
           yargs.command({
             command: 'variable',
             describe: 'Create a new variable for provided environment',
-            handler: (_args) => {},
-            builder: { name: {} }
+            handler: (args) => {
+              createOrUpdateEnvironmentVariable(args, yargs);
+            },
+            builder: {}
           });
 
           return yargs;
@@ -47,6 +54,29 @@ export function buildCommands(cli: Argv) {
         describe: 'Create a new ruleset',
         handler: (_args) => {
           yargs.showHelp();
+        },
+        builder: {
+          scope: {
+            type: 'string',
+            choices: ['global', 'repository'],
+            requiresArg: true,
+            describe: 'Select the ruleset scope'
+          },
+          type: {
+            type: 'string',
+            choices: ['branch', 'tag'],
+            requiresArg: true,
+            describe: 'Select the ruleset type'
+          }
+        }
+      });
+
+      yargs.command({
+        command: 'branch protection',
+        aliases: 'bp',
+        describe: 'Create a branch protection',
+        handler: (args) => {
+          createBranchProtection(args, yargs);
         },
         builder: {
           scope: {

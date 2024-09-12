@@ -1,4 +1,9 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-export const cli = yargs(hideBin(process.argv));
+const cli = yargs(hideBin(process.argv));
+
+cli.scriptName('gtools');
+cli.demandCommand();
+
+export { cli };
