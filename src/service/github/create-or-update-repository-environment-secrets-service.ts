@@ -1,21 +1,15 @@
-import { octokit } from '@/service';
 import type { RequestError } from '@/types/github';
 
-type CreateOrUpdateToRepositoryParams = {
+import { octokit } from './octokit';
+
+type Params = {
   repo: string;
   owner: string;
   environment: string;
   secrets: Record<string, string>;
 };
-
-type createOrUpdateEnvironmentSecretsParams = {
-  repos: { repo: string; owner: string }[];
-  environment: string;
-  secrets: Record<string, string>;
-};
-
-async function CreateOrUpdateToRepository(
-  params: CreateOrUpdateToRepositoryParams
+export async function createOrUpdateRepositoryEnvironmentSecretsService(
+  params: Params
 ) {
   try {
     const { data: publicKey } = await octokit.actions.getEnvironmentPublicKey({
@@ -42,18 +36,5 @@ async function CreateOrUpdateToRepository(
         `${response.data.message} - ${response.data.documentation_url}`
       );
     }
-  }
-}
-
-export async function createOrUpdateEnvironmentSecrets(
-  params: createOrUpdateEnvironmentSecretsParams
-) {
-  for await (const item of params.repos) {
-    await CreateOrUpdateToRepository({
-      owner: item.owner,
-      repo: item.repo,
-      environment: params.environment,
-      secrets: params.secrets
-    });
   }
 }

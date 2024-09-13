@@ -1,26 +1,13 @@
-import { octokit } from '@/service';
-import type { RestEndpointMethodTypes } from '@octokit/rest';
+/* eslint-disable prefer-spread */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-constant-condition */
 
-type RepoTypes = 'listForOrg' | 'listForUser' | 'listForAuthenticatedUser';
-
-type Repositories<T extends RepoTypes> =
-  RestEndpointMethodTypes['repos'][T]['response']['data'];
-
-type ParamsForUser = { username: string };
-type ParamsForOrg = { org: string };
+import { octokit } from './octokit';
 
 type Params = { username?: string; org?: string };
+type Repository = { id: string; repo: string; owner: string };
 
-export async function getRepositories(
-  params: ParamsForUser
-): Promise<Repositories<'listForUser'>>;
-export async function getRepositories(
-  params: ParamsForOrg
-): Promise<Repositories<'listForOrg'>>;
-export async function getRepositories(
-  params: Params
-): Promise<Repositories<'listForAuthenticatedUser'>>;
-export async function getRepositories(params: Params): Promise<unknown[]> {
+export async function getRepositories(params: Params): Promise<Repository[]> {
   const getHandler = () => {
     if (params.username) {
       return (page: number) => {
@@ -51,7 +38,6 @@ export async function getRepositories(params: Params): Promise<unknown[]> {
   };
 
   const handler = getHandler();
-
   const repos: unknown[] = [];
 
   let page = 1;
@@ -63,10 +49,16 @@ export async function getRepositories(params: Params): Promise<unknown[]> {
       break;
     }
 
-    repos.push.apply(repos, data);
+    const repositories = data.map((item) => ({
+      id: item.id,
+      repo: item.name,
+      owner: item.owner.login
+    }));
+
+    repos.push.apply(repos, repositories);
 
     page++;
   }
 
-  return repos;
+  return <Repository[]>repos;
 }

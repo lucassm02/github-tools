@@ -1,10 +1,11 @@
 import { cli } from './cli';
-import { buildCommands } from './command';
+import { makeCommands } from './command';
 
 export default async function main() {
   cli.help();
 
-  buildCommands(cli);
+  makeCommands(cli);
 
+  // eslint-disable-next-line no-unused-expressions
   cli.argv;
 }

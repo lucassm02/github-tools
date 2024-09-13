@@ -54,3 +54,20 @@ interface Data {
   documentation_url: string;
   status: string;
 }
+
+type RequiredStatusChecks = {
+  strict: boolean;
+  contexts: string[];
+};
+
+export type Rule = {
+  owner: string;
+  repo: string;
+  branch: string;
+  required_status_checks: RequiredStatusChecks;
+  enforce_admins: boolean;
+  required_pull_request_reviews: RequiredPullRequestReviews;
+  restrictions: {};
+  allow_force_pushes: boolean;
+  allow_deletions: boolean;
+};

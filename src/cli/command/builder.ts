@@ -1,11 +1,13 @@
 import type { Argv } from 'yargs';
 
-import { createEnvironmentHandler } from './create/environment/handler';
-import { createOrUpdateEnvironmentSecrets } from './create/environment/secret';
-import { createOrUpdateEnvironmentVariable } from './create/environment/variable';
-import { createBranchProtection } from './create/branch/handle';
+import {
+  createBranchProtectionHandler,
+  createEnvironmentHandler,
+  createOrUpdateEnvironmentSecretHandler,
+  createOrUpdateEnvironmentVariableHandler
+} from './handler';
 
-export function buildCommands(cli: Argv) {
+export function makeCommands(cli: Argv) {
   cli.command({
     command: 'create',
     describe: 'Create a new entity',
@@ -31,7 +33,7 @@ export function buildCommands(cli: Argv) {
             command: 'secret',
             describe: 'Create a new secret for provided environment',
             handler: (args) => {
-              createOrUpdateEnvironmentSecrets(args, yargs);
+              createOrUpdateEnvironmentSecretHandler(args, yargs);
             },
             builder: {}
           });
@@ -40,7 +42,7 @@ export function buildCommands(cli: Argv) {
             command: 'variable',
             describe: 'Create a new variable for provided environment',
             handler: (args) => {
-              createOrUpdateEnvironmentVariable(args, yargs);
+              createOrUpdateEnvironmentVariableHandler(args, yargs);
             },
             builder: {}
           });
@@ -76,7 +78,7 @@ export function buildCommands(cli: Argv) {
         aliases: 'bp',
         describe: 'Create a branch protection',
         handler: (args) => {
-          createBranchProtection(args, yargs);
+          createBranchProtectionHandler(args, yargs);
         },
         builder: {
           scope: {

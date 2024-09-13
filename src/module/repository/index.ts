@@ -1,2 +1,1 @@
-export * from './get-repositories';
-export * from './create-branch-protection';
+export * from './create-branch-protection-module';
