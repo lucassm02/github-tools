@@ -1,6 +1,6 @@
 import ora from 'ora';
 
-import { input, select } from '@inquirer/prompts';
+import { input, select, Separator } from '@inquirer/prompts';
 import { getRepositories } from '@/service';
 
 export async function fetchRepositoriesByScope() {
@@ -28,7 +28,8 @@ export async function fetchRepositoriesByScope() {
           name: 'all',
           value: 'ALL',
           description: `Fetch all repositories within the token's access level`
-        }
+        },
+        new Separator()
       ]
     });
 
