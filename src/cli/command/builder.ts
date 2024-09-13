@@ -1,13 +1,31 @@
 import type { Argv } from 'yargs';
 
+import { middleware } from '@/util/middleware';
+
 import {
   createBranchProtectionHandler,
   createEnvironmentHandler,
   createOrUpdateEnvironmentSecretHandler,
-  createOrUpdateEnvironmentVariableHandler
+  createOrUpdateEnvironmentVariableHandler,
+  loginHandler
 } from './handler';
+import { validateTokenMiddleware } from './middleware';
 
-export function makeCommands(cli: Argv) {
+export function builder(cli: Argv) {
+  cli.command({
+    command: 'login',
+    describe: 'Set github token to manage repositories',
+    builder: {
+      token: {
+        alias: 't',
+        type: 'string'
+      }
+    },
+    handler: (args) => {
+      loginHandler(args, cli);
+    }
+  });
+
   cli.command({
     command: 'create',
     describe: 'Create a new entity',
@@ -19,7 +37,11 @@ export function makeCommands(cli: Argv) {
         command: 'environment',
         describe: 'Create a new environment',
         handler: (args) => {
-          createEnvironmentHandler(args, yargs);
+          middleware(
+            [args, yargs],
+            validateTokenMiddleware,
+            createEnvironmentHandler
+          );
         },
         builder: (yargs) => {
           yargs.option('name', {
@@ -33,7 +55,11 @@ export function makeCommands(cli: Argv) {
             command: 'secret',
             describe: 'Create a new secret for provided environment',
             handler: (args) => {
-              createOrUpdateEnvironmentSecretHandler(args, yargs);
+              middleware(
+                [args, yargs],
+                validateTokenMiddleware,
+                createOrUpdateEnvironmentSecretHandler
+              );
             },
             builder: {}
           });
@@ -42,7 +68,11 @@ export function makeCommands(cli: Argv) {
             command: 'variable',
             describe: 'Create a new variable for provided environment',
             handler: (args) => {
-              createOrUpdateEnvironmentVariableHandler(args, yargs);
+              middleware(
+                [args, yargs],
+                validateTokenMiddleware,
+                createOrUpdateEnvironmentVariableHandler
+              );
             },
             builder: {}
           });
@@ -78,7 +108,11 @@ export function makeCommands(cli: Argv) {
         aliases: 'bp',
         describe: 'Create a branch protection',
         handler: (args) => {
-          createBranchProtectionHandler(args, yargs);
+          middleware(
+            [args, yargs],
+            validateTokenMiddleware,
+            createBranchProtectionHandler
+          );
         },
         builder: {
           scope: {

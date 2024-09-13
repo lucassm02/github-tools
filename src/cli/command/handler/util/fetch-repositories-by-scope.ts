@@ -54,8 +54,6 @@ export async function fetchRepositoriesByScope() {
 
   const repositories = await fetch();
 
-  console.log(repositories);
-
   spinner.succeed('Fetch completed!');
 
   return repositories;

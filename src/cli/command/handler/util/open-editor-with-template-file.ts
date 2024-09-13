@@ -1,12 +1,12 @@
 import { mkdirSync, unlinkSync } from 'fs';
 import path from 'path';
 
-import { ENVIRONMENT } from '@/config';
+import { CONSTANT } from '@/config';
 
 export async function openEditorWithTemplateFile(
   content: Record<string, unknown>
 ) {
-  const gtoolsFolder = path.resolve(<string>ENVIRONMENT.USER.HOME, '.gtools');
+  const gtoolsFolder = path.resolve(<string>CONSTANT.USER.HOME, '.gtools');
   const tempFolder = path.join(gtoolsFolder, 'temp');
   mkdirSync(tempFolder, { recursive: true });
   const filename = crypto.randomUUID().split('-').at(0)?.toLocaleLowerCase();
@@ -28,8 +28,8 @@ export async function openEditorWithTemplateFile(
     .split('\n')
     .filter((i) => i.includes('/'));
 
-  const shell = ENVIRONMENT.USER.SHELL || defaultShell;
-  const editor = ENVIRONMENT.USER.GTOOLS_EDITOR || defaultEditor;
+  const shell = CONSTANT.USER.SHELL || defaultShell;
+  const editor = CONSTANT.USER.GTOOLS_EDITOR || defaultEditor;
 
   const editorProcess = Bun.spawn({
     cmd: [shell, '-c', `${editor} "${tempFilePath}"`],

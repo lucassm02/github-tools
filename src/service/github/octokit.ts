@@ -1,6 +1,10 @@
 import { Octokit } from '@octokit/rest';
-import { ENVIRONMENT } from '@/config';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createTokenAuth } from '@octokit/auth-token';
 
-export const octokit = new Octokit({
-  auth: ENVIRONMENT.GITHUB_TOKEN
-});
+export async function octokitFactory() {
+  return new Octokit({
+    auth: 'asa',
+    authStrategy: createTokenAuth
+  });
+}

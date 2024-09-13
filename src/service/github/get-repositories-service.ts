@@ -2,12 +2,14 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-constant-condition */
 
-import { octokit } from './octokit';
+import { octokitFactory } from './octokit';
 
 type Params = { username?: string; org?: string };
 type Repository = { id: string; repo: string; owner: string };
 
 export async function getRepositories(params: Params): Promise<Repository[]> {
+  const octokit = await octokitFactory();
+
   const getHandler = () => {
     if (params.username) {
       return (page: number) => {

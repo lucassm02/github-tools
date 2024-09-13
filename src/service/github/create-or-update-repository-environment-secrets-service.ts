@@ -1,6 +1,6 @@
 import type { RequestError } from '@/types/github';
 
-import { octokit } from './octokit';
+import { octokitFactory } from './octokit';
 
 type Params = {
   repo: string;
@@ -12,6 +12,8 @@ export async function createOrUpdateRepositoryEnvironmentSecretsService(
   params: Params
 ) {
   try {
+    const octokit = await octokitFactory();
+
     const { data: publicKey } = await octokit.actions.getEnvironmentPublicKey({
       owner: params.owner,
       repo: params.repo,

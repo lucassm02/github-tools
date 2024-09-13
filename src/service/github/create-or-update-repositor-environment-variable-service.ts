@@ -1,6 +1,6 @@
 import type { RequestError } from '@/types/github';
 
-import { octokit } from './octokit';
+import { octokitFactory } from './octokit';
 
 type Params = {
   repo: string;
@@ -13,6 +13,8 @@ export async function createOrUpdateRepositorEnvironmentVariableService(
   params: Params
 ) {
   try {
+    const octokit = await octokitFactory();
+
     for await (const [key, value] of Object.entries(params.variables)) {
       await octokit.actions.createEnvironmentVariable({
         owner: params.owner,
