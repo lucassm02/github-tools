@@ -6,8 +6,8 @@ import { decryptTokenModule } from './decrypt-token-module';
 
 export async function getTokenModule() {
   try {
-    const gtoolsFolder = path.resolve(CONSTANT.USER.HOME, '.gtools');
-    const credentialsFile = path.join(gtoolsFolder, 'credentials.json');
+    const ghtoolsFolder = path.resolve(CONSTANT.USER.HOME, '.ghtools');
+    const credentialsFile = path.join(ghtoolsFolder, 'credentials.json');
     const content = await Bun.file(credentialsFile).text();
 
     if (!content) {

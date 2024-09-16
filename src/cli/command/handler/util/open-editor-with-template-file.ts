@@ -6,8 +6,8 @@ import { CONSTANT } from '@/config';
 export async function openEditorWithTemplateFile(
   content: Record<string, unknown>
 ) {
-  const gtoolsFolder = path.resolve(<string>CONSTANT.USER.HOME, '.gtools');
-  const tempFolder = path.join(gtoolsFolder, 'temp');
+  const ghtoolsFolder = path.resolve(<string>CONSTANT.USER.HOME, '.ghtools');
+  const tempFolder = path.join(ghtoolsFolder, 'temp');
   mkdirSync(tempFolder, { recursive: true });
   const filename = crypto.randomUUID().split('-').at(0)?.toLocaleLowerCase();
   const tempFilePath = path.join(tempFolder, `${filename}.json`);
@@ -29,7 +29,7 @@ export async function openEditorWithTemplateFile(
     .filter((i) => i.includes('/'));
 
   const shell = CONSTANT.USER.SHELL || defaultShell;
-  const editor = CONSTANT.USER.GTOOLS_EDITOR || defaultEditor;
+  const editor = CONSTANT.USER.ghtools_EDITOR || defaultEditor;
 
   const editorProcess = Bun.spawn({
     cmd: [shell, '-c', `${editor} "${tempFilePath}"`],

@@ -9,7 +9,7 @@ export async function validateTokenMiddleware(
   yargs: Argv
 ) {
   const EXITE_CODE = 1;
-  const ERROR_MESSAGE = `Token not defined, please run: 'gtools login' before proceeding`;
+  const ERROR_MESSAGE = `Token not defined, please run: 'ghtools login' before proceeding`;
   const error = new Error(ERROR_MESSAGE);
 
   const token = await getTokenModule();

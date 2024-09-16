@@ -6,6 +6,6 @@ export default {
   USER: {
     HOME: process.env.HOME ?? '/root',
     SHELL: process.env.SHELL ?? null,
-    GTOOLS_EDITOR: process.env.GTOOLS_EDITOR ?? null
+    ghtools_EDITOR: process.env.ghtools_EDITOR ?? null
   }
 };

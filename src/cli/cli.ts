@@ -3,7 +3,7 @@ import { hideBin } from 'yargs/helpers';
 
 const cli = yargs(hideBin(process.argv));
 
-cli.scriptName('gtools');
+cli.scriptName('ghtools');
 cli.demandCommand();
 
 export { cli };

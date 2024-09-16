@@ -10,8 +10,8 @@ export async function setTokenModule(token: string) {
 
   const fileContent = { token: encryptedToken };
 
-  const gtoolsFolder = path.resolve(CONSTANT.USER.HOME, '.gtools');
-  mkdirSync(gtoolsFolder, { recursive: true });
-  const credentialsFile = path.join(gtoolsFolder, 'credentials.json');
+  const ghtoolsFolder = path.resolve(CONSTANT.USER.HOME, '.ghtools');
+  mkdirSync(ghtoolsFolder, { recursive: true });
+  const credentialsFile = path.join(ghtoolsFolder, 'credentials.json');
   await Bun.write(credentialsFile, JSON.stringify(fileContent, null, 4));
 }
