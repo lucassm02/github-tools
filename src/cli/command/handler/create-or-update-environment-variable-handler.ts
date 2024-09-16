@@ -33,7 +33,8 @@ export async function createOrUpdateEnvironmentVariableHandler(
 
   const applyToAllRepositories = await confirm({
     message:
-      'Do you want to create this environment variable in all repositories?'
+      'Do you want to create this environment variable in all repositories?',
+    default: false
   });
 
   if (applyToAllRepositories) {

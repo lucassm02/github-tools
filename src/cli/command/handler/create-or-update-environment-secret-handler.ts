@@ -33,7 +33,8 @@ export async function createOrUpdateEnvironmentSecretHandler(
 
   const applyToAllRepositories = await confirm({
     message:
-      'Do you want to create this environment secret in all repositories?'
+      'Do you want to create this environment secret in all repositories?',
+    default: false
   });
 
   if (applyToAllRepositories) {

@@ -30,7 +30,8 @@ export async function createEnvironmentHandler(
   const repos = await fetchRepositoriesByScope();
 
   const applyToAllRepositories = await confirm({
-    message: 'Do you want to create this environment in all repositories?'
+    message: 'Do you want to create this environment in all repositories?',
+    default: false
   });
 
   if (applyToAllRepositories) {

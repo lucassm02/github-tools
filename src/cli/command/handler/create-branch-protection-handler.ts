@@ -30,7 +30,8 @@ export async function createBranchProtectionHandler(
   const repos = await fetchRepositoriesByScope();
 
   const applyToAllRepositories = await confirm({
-    message: 'Do you want to create this protection in all repositories?'
+    message: 'Do you want to create this protection in all repositories?',
+    default: false
   });
 
   if (applyToAllRepositories) {
