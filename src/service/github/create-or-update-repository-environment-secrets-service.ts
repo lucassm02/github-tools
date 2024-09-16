@@ -1,4 +1,5 @@
 import type { RequestError } from '@/types/github';
+import { encryptValue } from '@/util/encrypt-value';
 
 import { octokitFactory } from './octokit';
 
@@ -27,13 +28,13 @@ export async function createOrUpdateRepositoryEnvironmentSecretsService(
         key_id: publicKey.key_id,
         environment_name: params.environment,
         secret_name: key,
-        encrypted_value: Buffer.from(value).toString('base64')
+        encrypted_value: encryptValue(publicKey.key, value)
       });
     }
   } catch (error) {
     if (typeof error === 'object') {
       const { response } = <RequestError>error;
-
+      console.error(error);
       console.error(
         `${response.data.message} - ${response.data.documentation_url}`
       );

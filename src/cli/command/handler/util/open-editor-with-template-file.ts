@@ -29,7 +29,7 @@ export async function openEditorWithTemplateFile(
     .filter((i) => i.includes('/'));
 
   const shell = CONSTANT.USER.SHELL || defaultShell;
-  const editor = CONSTANT.USER.ghtools_EDITOR || defaultEditor;
+  const editor = CONSTANT.USER.GHTOOLS_EDITOR || defaultEditor;
 
   const editorProcess = Bun.spawn({
     cmd: [shell, '-c', `${editor} "${tempFilePath}"`],
@@ -42,7 +42,7 @@ export async function openEditorWithTemplateFile(
 
   const config = await Bun.file(tempFilePath).json();
 
-  setTimeout(() => unlinkSync(tempFilePath), 1_000);
+  setTimeout(() => unlinkSync(tempFilePath), 2_000);
 
   return config;
 }

@@ -1,10 +1,10 @@
+import { getTokenModule } from '@/module/token';
 import { Octokit } from '@octokit/rest';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { createTokenAuth } from '@octokit/auth-token';
 
 export async function octokitFactory() {
+  const token = await getTokenModule();
+
   return new Octokit({
-    auth: 'asa',
-    authStrategy: createTokenAuth
+    auth: token
   });
 }

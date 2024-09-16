@@ -23,11 +23,13 @@
   "dependencies": {
     "@inquirer/prompts": "^5.3.8",
     "@octokit/rest": "^21.0.2",
+    "libsodium-wrappers": "^0.7.15",
     "ora": "^8.1.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/libsodium-wrappers": "^0.7.14",
     "@types/node": "^22.5.1",
     "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
