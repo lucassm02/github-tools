@@ -16,7 +16,7 @@ export async function loginHandler(
       return;
     }
 
-    if (process.env.GITHUB_TOKEN && args.token === null) {
+    if (process.env.GITHUB_TOKEN && !args.token) {
       const reuseToken = await confirm({
         message:
           'We identified the GITHUB_TOKEN on your system, do you want to log in with the existing token?'
