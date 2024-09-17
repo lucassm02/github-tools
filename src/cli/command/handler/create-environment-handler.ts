@@ -20,7 +20,8 @@ export async function createEnvironmentHandler(
   const SUCCESS_MESSAGE = 'Environment created successfully!';
 
   const loadFile = await confirm({
-    message: 'Do you want to provide a JSON file with the configurations?'
+    message: 'Do you want to provide a JSON file with the configurations?',
+    default: false
   });
 
   const config = loadFile

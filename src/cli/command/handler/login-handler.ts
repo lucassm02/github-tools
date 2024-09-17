@@ -1,6 +1,5 @@
 import type { ArgumentsCamelCase, Argv } from 'yargs';
 
-import { CONSTANT } from '@/config';
 import { setTokenModule } from '@/module/token';
 import { confirm, password } from '@inquirer/prompts';
 
@@ -17,14 +16,14 @@ export async function loginHandler(
       return;
     }
 
-    if (CONSTANT.GITHUB_TOKEN && args.token === null) {
+    if (process.env.GITHUB_TOKEN && args.token === null) {
       const reuseToken = await confirm({
         message:
           'We identified the GITHUB_TOKEN on your system, do you want to log in with the existing token?'
       });
 
       if (reuseToken) {
-        await setTokenModule(CONSTANT.GITHUB_TOKEN);
+        await setTokenModule(process.env.GITHUB_TOKEN);
         return;
       }
     }

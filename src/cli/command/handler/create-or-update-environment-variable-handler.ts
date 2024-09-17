@@ -22,7 +22,8 @@ export async function createOrUpdateEnvironmentVariableHandler(
   const environmentName = await input({ message: 'Enter environment name:' });
 
   const loadFile = await confirm({
-    message: 'Do you want to provide a JSON file with the configurations?'
+    message: 'Do you want to provide a JSON file with the configurations?',
+    default: false
   });
 
   const variables = loadFile
