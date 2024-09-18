@@ -1,5 +1,5 @@
-import os from 'os';
 import crypto from 'crypto';
+import os from 'os';
 
 export function generateUniquePassword() {
   const networkInterfaces = os.networkInterfaces();
@@ -22,8 +22,8 @@ export function generateUniquePassword() {
     throw new Error(`Unable to obtain the machine's MAC address`);
   }
 
-  const salt = os.hostname();
-  const uniqueData = macAddress + salt;
+  const uniqueData = `${macAddress.slice(0, -4)}#${os.platform()}#${os.hostname()}#${os.cpus().length}`;
+
   const hash = crypto.createHash('sha256').update(uniqueData).digest('hex');
   return hash;
 }
