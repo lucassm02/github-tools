@@ -16,7 +16,7 @@ export async function createOrUpdateRepositorEnvironmentVariableService(
     const octokit = await octokitFactory();
 
     for await (const [key, value] of Object.entries(params.variables)) {
-      await octokit.actions.createEnvironmentVariable({
+      await octokit.actions.updateEnvironmentVariable({
         owner: params.owner,
         repo: params.repo,
         environment_name: params.environment,
